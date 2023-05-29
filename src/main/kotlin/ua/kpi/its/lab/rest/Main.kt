@@ -1,5 +1,6 @@
 package ua.kpi.its.lab.rest
 
+import jakarta.servlet.DispatcherType
 import org.apache.logging.log4j.LogManager
 import org.apache.logging.log4j.Logger
 import org.eclipse.jetty.server.Server
@@ -8,7 +9,9 @@ import org.eclipse.jetty.servlet.ServletHolder
 import org.springframework.web.context.ContextLoaderListener
 import org.springframework.web.context.WebApplicationContext
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext
+import org.springframework.web.filter.DelegatingFilterProxy
 import org.springframework.web.servlet.DispatcherServlet
+import java.util.*
 
 private val logger: Logger
     get() = LogManager.getLogger()
@@ -31,10 +34,12 @@ private fun startJetty() {
 
 private val servletContextHandler: ServletContextHandler
     get() {
+        val filter = DelegatingFilterProxy("springSecurityFilterChain", webAppContext)
         val webAppContext = webApplicationContext
         val dispatcherServlet = DispatcherServlet(webAppContext)
         val springServletHolder = ServletHolder("dispatcherServlet", dispatcherServlet)
         return ServletContextHandler(ServletContextHandler.SESSIONS).apply {
+            addFilter(FilterHolder(filter), "/*", EnumSet.of(DispatcherType.REQUEST))
             errorHandler = null
             contextPath = "/"
             addServlet(springServletHolder, "/*")
