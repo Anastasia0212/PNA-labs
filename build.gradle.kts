@@ -25,14 +25,17 @@ dependencies {
     implementation("org.eclipse.jetty:jetty-webapp:11.0.14")
     implementation("org.hibernate:hibernate-core:6.1.7.Final")
     implementation("org.hsqldb:hsqldb:2.7.1")
-    implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.jetbrains.kotlin:kotlin-reflect:1.8.0")
+    implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+    implementation("org.springframework.boot:spring-boot-starter-security")
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.data:spring-data-jpa:3.0.3")
     implementation("org.springframework:spring-webmvc:6.0.6")
     implementation("org.thymeleaf:thymeleaf-spring6:3.1.1.RELEASE")
     providedRuntime("org.springframework.boot:spring-boot-starter-tomcat")
+    runtimeOnly("org.hsqldb:hsqldb")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
+    testImplementation("org.springframework.security:spring-security-test")
     testImplementation(kotlin("test"))
 }
 
